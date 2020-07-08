@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ywake <ywake@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:46:08 by ywake             #+#    #+#             */
-/*   Updated: 2020/07/08 14:22:17 by ywake            ###   ########.fr       */
+/*   Updated: 2020/07/08 14:36:51 by ywake            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,29 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 	// (void)argv;
-	int fd;
-	int rtn = 1;
-	char *filename = argv[1];
+	int rtn1 = 1;
+	int rtn2 = 1;
+	char *file1 = argv[1];
+	char *file2 = argv[2];
 	// char *filename = "test.txt";
 	char **line = (char **)malloc(1 * sizeof(char *));
 
-	fd = open(filename, O_RDONLY);
-	printf("[main] fd : %d\n", fd);
-	while (rtn > 0)
+	int fd1 = open(file1, O_RDONLY);
+	int fd2 = open(file2, O_RDONLY);
+	printf("[main] fd1: %d, fd2: %d\n", fd1, fd2);
+	while (rtn1 > 0 || rtn2 > 0)
 	{
-		rtn = get_next_line(fd, line);
-		// rtn = get_next_line(999, line);
-		// rtn = get_next_line(0, line);
-		// rtn = get_next_line(1, line);
-		printf("[main] line: '%s'(%d)\n", *line, rtn);
+		rtn1 = get_next_line(fd1, line);
+		printf("[main fd=%d] line: '%s'(%d)\n", fd1, *line, rtn1);
+		free(*line);
+		*line = NULL;
+		rtn2 = get_next_line(fd2, line);
+		printf("[main fd=%d] line: '%s'(%d)\n", fd2, *line, rtn2);
 		free(*line);
 		*line = NULL;
 	}
-	close(fd);
+	close(fd1);
+	close(fd2);
 
 	printf("\nleak check...\n\n");
 	while(1);
