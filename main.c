@@ -6,7 +6,7 @@
 /*   By: ywake <ywake@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 12:46:08 by ywake             #+#    #+#             */
-/*   Updated: 2020/07/08 14:22:17 by ywake            ###   ########.fr       */
+/*   Updated: 2020/07/10 17:56:56 by ywake            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,17 @@ int main(int argc, char *argv[])
 	int fd;
 	int rtn = 1;
 	char *filename = argv[1];
-	// char *filename = "test.txt";
-	char **line = (char **)malloc(1 * sizeof(char *));
+	// char *filename = "test/test.txt";
+	char *line[1];
 
 	fd = open(filename, O_RDONLY);
+	// fd = 999;
+	// fd = 0;
 	printf("[main] fd : %d\n", fd);
 	while (rtn > 0)
 	{
 		rtn = get_next_line(fd, line);
-		// rtn = get_next_line(999, line);
-		// rtn = get_next_line(0, line);
-		// rtn = get_next_line(1, line);
-		printf("[main] line: '%s'(%d)\n", *line, rtn);
+		printf("[main] line: '%s'(rtn: %d)\n", *line, rtn);
 		free(*line);
 		*line = NULL;
 	}
